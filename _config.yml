@@ -1,0 +1,21 @@
+# Jekyll configuration for GitHub Pages
+title: Broken Build
+description: A GitHub Pages site
+baseurl: ""
+url: "https://broken-build.com"
+author: Your Name
+
+# Theme
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Build settings
+markdown: kramdown
+exclude:
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
