@@ -1,5 +1,11 @@
 # Claude Code for AI-Driven Development — Proposal for Security Approval
 
+## Summary
+
+This document outlines a proposal to adopt Claude Code as an agentic AI development tool, routed through our existing Google Cloud or Azure infrastructure, and identifies the key open items required for security approval.
+
+---
+
 ## What is Claude Code
 
 Claude Code is an agentic AI development tool built by Anthropic. It runs as a command-line application on a developer's local machine and connects to Claude — Anthropic's AI model — to autonomously perform software development tasks. Unlike traditional code assistants, Claude Code can read an entire codebase, plan and implement changes across multiple files, run tests, and iterate on results with minimal human intervention.
@@ -70,7 +76,7 @@ For most development workflows Sonnet 4.6 is the default. Haiku 4.5 is useful fo
 | EU data residency | ✅ Regional endpoints available (e.g. `europe-west1`) |
 | Existing DPA covers usage | ✅ No new vendor DPA needed |
 | FedRAMP High boundary | ✅ Operates within Google Cloud authorization |
-| ISO 27001 / SOC2 | ✅ Inherited from Google Cloud / Azure infrastructure |
+| ISO 27001 / SOC 2 | ✅ Inherited from Google Cloud / Azure infrastructure |
 | Data processed outside EU | ✅ Prevented when EU regional endpoint configured |
 | Source code leaves corporate perimeter | ✅ Prevented via VPC Service Controls |
 | Audit trail of AI usage | ✅ Full audit logging via Google Cloud / Azure audit trails |
@@ -109,11 +115,26 @@ This is a critical point for banking compliance.
 
 ## Additional Security Controls
 
-- **Model Armor** (Vertex AI) — protection against prompt injection and tool poisoning
 - **VPC Service Controls** — requests never leave defined network perimeter
 - **Audit logging** — every API call logged and traceable
 - **EU regional endpoint mandatory** — enforced at infrastructure level, not left to individual developers
 - **No training on customer data** — confirmed across all commercial/enterprise routes
+
+### Model Guardrails — Important Consideration
+
+Both platforms offer an AI safety/filtering layer that sits in front of Claude. This is worth evaluating carefully for a developer tooling use case.
+
+**Google Cloud — Model Armor**
+Filters prompts and responses for harmful content. Configurable with custom policies.
+⚠️ Risk: May false-positive on legitimate banking/security development tasks (encryption code, auth flows, vulnerability analysis). Configurability for enterprise developer use cases should be confirmed with Google before committing to this route.
+More info: `cloud.google.com/security/products/model-armor`
+
+**Azure AI Foundry — Azure AI Content Safety**
+Microsoft's equivalent filtering layer, similarly configurable.
+⚠️ Same risk applies — needs evaluation for developer tooling false positive rate.
+More info: `azure.microsoft.com/products/ai-services/ai-content-safety`
+
+**Key question for both platforms:** Can the filtering layer be tuned or selectively disabled for approved internal developer tooling use cases? This should be confirmed before final platform selection.
 
 ---
 
@@ -136,6 +157,8 @@ export ANTHROPIC_VERTEX_PROJECT_ID=YOUR-GCP-PROJECT-ID
 - [ ] Check with Google or Microsoft account manager if explicit sign-off needed for Claude models specifically
 - [ ] Define internal policy on what code/data developers may share with Claude Code (e.g. no production data, no credentials)
 - [ ] Confirm VPC Service Controls are configured to restrict egress appropriately
+- [ ] Evaluate Model Armor (Vertex AI) / Azure AI Content Safety false positive rate for banking development tasks
+- [ ] Confirm guardrail layer can be tuned or selectively disabled for internal developer tooling
 
 ---
 
