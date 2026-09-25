@@ -11,6 +11,7 @@ type AssistantTurn = {
   texts: string[];
   progress: string | null;
   processor: Processor | null;
+  actions: string[]; // A2UI actions sent from this turn's surfaces (client → agent)
   error: string | null;
   done: boolean;
 };
@@ -102,7 +103,7 @@ export function App() {
     setTurns(ts => [
       ...ts,
       {id: nextId++, role: 'user', text},
-      {id, role: 'assistant', texts: [], progress: null, processor: null, error: null, done: false},
+      {id, role: 'assistant', texts: [], progress: null, processor: null, actions: [], error: null, done: false},
     ]);
     setInput('');
     await run(id, {agent, session_id: sessions[agent] ?? null, text});
@@ -110,7 +111,8 @@ export function App() {
 
   /** A2UI user action (e.g. WeatherCard Refresh): answered into the turn that owns the surface. */
   const sendAction = async (id: number, agentName: string, action: A2UiClientAction) => {
-    updateTurn(id, () => ({done: false, error: null}));
+    const sent = `${action.name} ${JSON.stringify(action.context)}`;
+    updateTurn(id, t => ({done: false, error: null, actions: [...t.actions, sent]}));
     await run(id, {agent: agentName, session_id: sessionsRef.current[agentName] ?? null, action});
   };
 
@@ -140,6 +142,9 @@ export function App() {
                 <p key={i}>{s}</p>
               ))}
               {t.processor && <A2uiView processor={t.processor} />}
+              {t.actions.map((a, i) => (
+                <p key={i} className="action">↑ sent action {a}</p>
+              ))}
               {t.progress && <p className="progress">using {t.progress}…</p>}
               {!t.done && !t.progress && t.texts.length === 0 && (
                 <p className="progress">thinking…</p>

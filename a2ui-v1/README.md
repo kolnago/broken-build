@@ -30,10 +30,10 @@ gcloud auth application-default login
 ```
 
 ```bash
-cp backend/.env.example backend/.env
+cp .env.example .env
 ```
 
-Then set `GOOGLE_CLOUD_PROJECT` in `backend/.env` to your Google Cloud project.
+Then set `GOOGLE_CLOUD_PROJECT` in `.env` (in `a2ui-v1/`, gitignored) to your Google Cloud project.
 
 Backend (http://localhost:8080):
 
@@ -49,6 +49,9 @@ cd frontend && npm install && npm run dev
 
 Then choose `weather_ui` and type "weather in Prague". Click **Refresh** on the card:
 the agent fetches the weather again and the card updates in place ("updated HH:MM:SS").
+The **Prague / Brno / London** buttons above the card do the same for another city: each
+sends a `show_city` action with the city in its context, and the card switches to it. Every
+action you send is listed under the surface ("↑ sent action …").
 
 ## Debugging agents with `adk web`
 

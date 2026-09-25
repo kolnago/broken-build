@@ -7,7 +7,7 @@ from app.weather import get_weather
 from app.weather_catalog import weather_catalog_config
 
 a2ui = A2uiSupport(
-    allowed_components=["WeatherCard", "Column", "Row", "Text"],
+    allowed_components=["WeatherCard", "Column", "Row", "Text", "Button"],
     catalog=weather_catalog_config(),
     examples_path=str(CATALOG_DIR / "examples" / "weather_layout.json"),
 )
@@ -23,6 +23,8 @@ WORKFLOW = """
   updateDataModel; the application fills the data model with the exact `get_weather` result.
 - When the message is a UI action "refresh" with a city in its context, call `get_weather`
   for that city again and reply with just "Refreshed." (no A2UI block).
+- When the message is a UI action "show_city" with a city in its context, call `get_weather`
+  for that city and reply with just "Done." (no A2UI block).
 - Never write a number into a component. Every value from the tool must be a data binding:
   {"path": "/temperature_c"}, or a formatString like "${/temperature_c} °C".
 """
@@ -32,7 +34,9 @@ Build a single surface with surfaceId "weather" and catalogId "{a2ui.catalog_id}
 The data model is exactly the `get_weather` result:
   /city, /country, /temperature_c, /condition, /wind_kmh, /fetched_at,
   /forecast (a list of items with: date, min_c, max_c, condition).
-Use one WeatherCard for the current weather (bind city, temperature, condition, wind,
+Start with a Row of three Buttons (Prague, Brno, London), each with a Text child holding the
+city name and the event action "show_city" with context {{"city": "<that city name>"}}.
+Then one WeatherCard for the current weather (bind city, temperature, condition, wind,
 updatedAt; its refresh action is the event "refresh" with context {{"city": {{"path": "/city"}}}}),
 followed by the forecast list.
 For the forecast, use a template child list {{"componentId": ..., "path": "/forecast"}} and

@@ -11,7 +11,17 @@
     "updateComponents": {
       "surfaceId": "weather",
       "components": [
-        {"id": "root", "component": "Column", "children": ["card", "days"]},
+        {"id": "root", "component": "Column", "children": ["cities", "card", "days"]},
+        {"id": "cities", "component": "Row", "children": ["btn_prague", "btn_brno", "btn_london"]},
+        {"id": "btn_prague", "component": "Button", "child": "lbl_prague",
+         "action": {"event": {"name": "show_city", "context": {"city": "Prague"}}}},
+        {"id": "lbl_prague", "component": "Text", "text": "Prague"},
+        {"id": "btn_brno", "component": "Button", "child": "lbl_brno",
+         "action": {"event": {"name": "show_city", "context": {"city": "Brno"}}}},
+        {"id": "lbl_brno", "component": "Text", "text": "Brno"},
+        {"id": "btn_london", "component": "Button", "child": "lbl_london",
+         "action": {"event": {"name": "show_city", "context": {"city": "London"}}}},
+        {"id": "lbl_london", "component": "Text", "text": "London"},
         {"id": "card", "component": "WeatherCard",
          "city": {"path": "/city"},
          "temperature": {"path": "/temperature_c"},

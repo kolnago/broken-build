@@ -34,7 +34,7 @@ Ports: 8000 `adk web`, 8080 backend (also Cloud Run's default `PORT`), 5173 Vite
   `updateDataModel` comes only from tool results (`registry.py` → `data_model`). The digit
   check rejects any literal number in component props.
 - Errors sent to the client are safe messages only; log details server-side.
-- Model name comes from `A2UI_DEMO_MODEL`. Vertex AI settings live in `backend/.env` (gitignored).
+- Model name comes from `A2UI_DEMO_MODEL`. Vertex AI settings live in `.env` in this folder (gitignored, template: `.env.example`).
 
 ## Layout
 

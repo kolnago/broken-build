@@ -126,3 +126,19 @@ def test_custom_component_validates_against_merged_catalog():
     assert [e["type"] for e in events(wrap(msgs([card])))] == ["text", "a2ui"]
     assert is_fallback(events(wrap(msgs([{**card, "temperature": 12}]))))
     assert is_fallback(events(wrap(msgs([{k: v for k, v in card.items() if k != "refresh"}]))))
+
+
+def test_city_buttons_example_passes_checks_and_switches_city():
+    from app.api import _action_events
+    from app.events import ChatRequest
+    from app.paths import CATALOG_DIR
+
+    example = json.loads((CATALOG_DIR / "examples" / "weather_layout.json").read_text())
+    assert [e["type"] for e in events(wrap(example))] == ["text", "a2ui"]
+
+    req = ChatRequest.model_validate({"agent": "weather_ui", "action": {
+        "name": "show_city", "surfaceId": "weather", "sourceComponentId": "btn_brno",
+        "timestamp": "2026-09-25T07:44:46Z", "context": {"city": "Brno"}}})
+    brno = {"get_weather": {"city": "Brno", "temperature_c": 11.4}}
+    out = [e.model_dump() for e in _action_events(WEATHER, req.action, brno)]
+    assert out[0]["messages"][0]["updateDataModel"]["value"]["city"] == "Brno"
