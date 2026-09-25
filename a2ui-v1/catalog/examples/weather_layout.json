@@ -1,0 +1,30 @@
+[
+  {
+    "version": "v0.9",
+    "createSurface": {
+      "surfaceId": "weather",
+      "catalogId": "https://a2ui-demo.local/catalogs/weather/v1/catalog.json"
+    }
+  },
+  {
+    "version": "v0.9",
+    "updateComponents": {
+      "surfaceId": "weather",
+      "components": [
+        {"id": "root", "component": "Column", "children": ["card", "days"]},
+        {"id": "card", "component": "WeatherCard",
+         "city": {"path": "/city"},
+         "temperature": {"path": "/temperature_c"},
+         "condition": {"path": "/condition"},
+         "wind": {"path": "/wind_kmh"},
+         "updatedAt": {"path": "/fetched_at"},
+         "refresh": {"event": {"name": "refresh", "context": {"city": {"path": "/city"}}}}},
+        {"id": "days", "component": "Column", "children": {"componentId": "day", "path": "/forecast"}},
+        {"id": "day", "component": "Row", "justify": "spaceBetween", "children": ["day_date", "day_range"]},
+        {"id": "day_date", "component": "Text", "text": {"path": "date"}},
+        {"id": "day_range", "component": "Text",
+         "text": {"call": "formatString", "args": {"value": "${min_c} / ${max_c} °C"}}}
+      ]
+    }
+  }
+]

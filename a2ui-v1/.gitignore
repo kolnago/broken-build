@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+node_modules/
+dist/
+.env
+*.pyc
+.DS_Store
+# adk web per-agent session/artifact storage
+.adk/

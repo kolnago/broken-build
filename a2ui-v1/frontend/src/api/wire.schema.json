@@ -1,0 +1,260 @@
+{
+  "title": "WireTypes",
+  "type": "object",
+  "properties": {
+    "A2uiClientAction": {
+      "$ref": "#/$defs/A2uiClientAction"
+    },
+    "AgentInfo": {
+      "$ref": "#/$defs/AgentInfo"
+    },
+    "ChatRequest": {
+      "$ref": "#/$defs/ChatRequest"
+    },
+    "A2uiEvent": {
+      "$ref": "#/$defs/A2uiEvent"
+    },
+    "DoneEvent": {
+      "$ref": "#/$defs/DoneEvent"
+    },
+    "ErrorEvent": {
+      "$ref": "#/$defs/ErrorEvent"
+    },
+    "ProgressEvent": {
+      "$ref": "#/$defs/ProgressEvent"
+    },
+    "TextEvent": {
+      "$ref": "#/$defs/TextEvent"
+    },
+    "StreamEvent": {
+      "$ref": "#/$defs/StreamEvent"
+    }
+  },
+  "$defs": {
+    "A2uiClientAction": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "The name of the action, taken from the component's action.event.name property.",
+          "type": "string"
+        },
+        "surfaceId": {
+          "description": "The id of the surface where the event originated.",
+          "type": "string"
+        },
+        "sourceComponentId": {
+          "description": "The id of the component that triggered the event.",
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "An ISO 8601 timestamp of when the event occurred.",
+          "type": "string"
+        },
+        "context": {
+          "additionalProperties": true,
+          "description": "A JSON object containing the key-value pairs from the component's action.event.context, after resolving all data bindings.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "surfaceId",
+        "sourceComponentId",
+        "timestamp",
+        "context"
+      ],
+      "title": "A2uiClientAction",
+      "type": "object"
+    },
+    "AgentInfo": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "renders_a2ui": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "renders_a2ui"
+      ],
+      "title": "AgentInfo",
+      "type": "object"
+    },
+    "ChatRequest": {
+      "properties": {
+        "agent": {
+          "type": "string"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "text": {
+          "default": "",
+          "type": "string"
+        },
+        "action": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/A2uiClientAction"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "agent"
+      ],
+      "title": "ChatRequest",
+      "type": "object"
+    },
+    "A2uiEvent": {
+      "properties": {
+        "type": {
+          "const": "a2ui",
+          "default": "a2ui",
+          "type": "string"
+        },
+        "messages": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "messages"
+      ],
+      "title": "A2uiEvent",
+      "type": "object"
+    },
+    "DoneEvent": {
+      "properties": {
+        "type": {
+          "const": "done",
+          "default": "done",
+          "type": "string"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "type",
+        "session_id"
+      ],
+      "title": "DoneEvent",
+      "type": "object"
+    },
+    "ErrorEvent": {
+      "properties": {
+        "type": {
+          "const": "error",
+          "default": "error",
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "message"
+      ],
+      "title": "ErrorEvent",
+      "type": "object"
+    },
+    "ProgressEvent": {
+      "properties": {
+        "type": {
+          "const": "progress",
+          "default": "progress",
+          "type": "string"
+        },
+        "tool": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "tool"
+      ],
+      "title": "ProgressEvent",
+      "type": "object"
+    },
+    "TextEvent": {
+      "properties": {
+        "type": {
+          "const": "text",
+          "default": "text",
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "text"
+      ],
+      "title": "TextEvent",
+      "type": "object"
+    },
+    "StreamEvent": {
+      "title": "StreamEvent",
+      "discriminator": {
+        "mapping": {
+          "a2ui": "#/$defs/A2uiEvent",
+          "done": "#/$defs/DoneEvent",
+          "error": "#/$defs/ErrorEvent",
+          "progress": "#/$defs/ProgressEvent",
+          "text": "#/$defs/TextEvent"
+        },
+        "propertyName": "type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ProgressEvent"
+        },
+        {
+          "$ref": "#/$defs/A2uiEvent"
+        },
+        {
+          "$ref": "#/$defs/TextEvent"
+        },
+        {
+          "$ref": "#/$defs/DoneEvent"
+        },
+        {
+          "$ref": "#/$defs/ErrorEvent"
+        }
+      ]
+    }
+  }
+}
