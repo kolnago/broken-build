@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "a2ui-demo weather catalog",
+  "description": "Custom components for the demo. Merged on top of the A2UI v0.9 basic catalog by the backend and the frontend.",
+  "catalogId": "https://a2ui-demo.local/catalogs/weather/v1/catalog.json",
+  "components": {
+    "WeatherCard": {
+      "type": "object",
+      "description": "Current weather for one city with a Refresh button. Bind every value to the data model.",
+      "allOf": [
+        {"$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"},
+        {"$ref": "#/$defs/CatalogComponentCommon"},
+        {
+          "type": "object",
+          "properties": {
+            "component": {"const": "WeatherCard"},
+            "city": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString",
+              "description": "City name, e.g. {\"path\": \"/city\"}."
+            },
+            "temperature": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicNumber",
+              "description": "Current temperature in °C, e.g. {\"path\": \"/temperature_c\"}."
+            },
+            "condition": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString",
+              "description": "Weather condition text, e.g. {\"path\": \"/condition\"}."
+            },
+            "wind": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicNumber",
+              "description": "Wind speed in km/h, e.g. {\"path\": \"/wind_kmh\"}."
+            },
+            "updatedAt": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString",
+              "description": "When the data was fetched, e.g. {\"path\": \"/fetched_at\"}."
+            },
+            "refresh": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/Action",
+              "description": "Action for the Refresh button. Use {\"event\": {\"name\": \"refresh\", \"context\": {\"city\": {\"path\": \"/city\"}}}}."
+            }
+          },
+          "required": ["component", "city", "temperature", "condition", "wind", "refresh"]
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

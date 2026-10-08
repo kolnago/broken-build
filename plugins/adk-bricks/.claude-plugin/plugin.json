@@ -1,0 +1,8 @@
+{
+  "name": "adk-bricks",
+  "version": "0.7.0",
+  "description": "A minimal charter for building Google ADK software as bricks: small tools, agents, workflows, skills, MCP servers and Python components composed by apps. Strict at the edges, free inside; strict and free trust levels; used with Google's ADK API reference skill, without the agents-cli command. Skills follow the open Agent Skills format.",
+  "author": {
+    "name": "kolnago"
+  }
+}

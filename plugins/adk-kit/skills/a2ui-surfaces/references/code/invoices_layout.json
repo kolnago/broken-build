@@ -1,0 +1,70 @@
+[
+  {
+    "version": "v0.9",
+    "createSurface": {
+      "surfaceId": "invoices",
+      "catalogId": "https://a2ui.org/specification/v0_9/catalogs/basic/catalog.json"
+    }
+  },
+  {
+    "version": "v0.9",
+    "updateComponents": {
+      "surfaceId": "invoices",
+      "components": [
+        {"id": "root", "component": "Column", "children": ["title", "rows", "detail"]},
+        {"id": "title", "component": "Text", "variant": "h3", "text": "Invoices"},
+
+        {"id": "rows", "component": "Column", "children": {"componentId": "row", "path": "/invoices"}},
+        {"id": "row", "component": "Button", "variant": "borderless", "child": "row_body",
+         "action": {"event": {"name": "select_invoice", "context": {"invoice_id": {"path": "id"}}}}},
+        {"id": "row_body", "component": "Row", "justify": "spaceBetween",
+         "children": ["row_number", "row_customer", "row_status", "row_total"]},
+        {"id": "row_number", "component": "Text", "text": {"path": "number"}},
+        {"id": "row_customer", "component": "Text", "text": {"path": "customer"}},
+        {"id": "row_status", "component": "Text", "variant": "caption", "text": {"path": "status"}},
+        {"id": "row_total", "component": "Text",
+         "text": {"call": "formatCurrency", "args": {"value": {"path": "total"}, "currency": {"path": "currency"}}}},
+
+        {"id": "detail", "component": "Card", "child": "detail_body"},
+        {"id": "detail_body", "component": "Column",
+         "children": ["detail_head", "detail_customer", "detail_dates", "detail_items", "detail_sep",
+                      "detail_subtotal", "detail_vat", "detail_total"]},
+        {"id": "detail_head", "component": "Row", "justify": "spaceBetween",
+         "children": ["detail_number", "detail_status"]},
+        {"id": "detail_number", "component": "Text", "variant": "h4", "text": {"path": "/selected/number"}},
+        {"id": "detail_status", "component": "Text", "variant": "caption", "text": {"path": "/selected/status"}},
+        {"id": "detail_customer", "component": "Text", "text": {"path": "/selected/customer"}},
+        {"id": "detail_dates", "component": "Text", "variant": "caption",
+         "text": {"call": "formatString", "args": {"value":
+           "Issued ${formatDate(value:${/selected/issue_date}, format:'d MMM yyyy')}, due ${formatDate(value:${/selected/due_date}, format:'d MMM yyyy')}"}}},
+
+        {"id": "detail_items", "component": "Column", "children": {"componentId": "item", "path": "/selected/items"}},
+        {"id": "item", "component": "Row", "justify": "spaceBetween",
+         "children": ["item_description", "item_quantity", "item_amount"]},
+        {"id": "item_description", "component": "Text", "text": {"path": "description"}},
+        {"id": "item_quantity", "component": "Text", "variant": "caption",
+         "text": {"call": "formatString", "args": {"value": "${quantity} ${unit}"}}},
+        {"id": "item_amount", "component": "Text",
+         "text": {"call": "formatCurrency", "args": {"value": {"path": "amount"}, "currency": {"path": "/selected/currency"}}}},
+
+        {"id": "detail_sep", "component": "Divider"},
+        {"id": "detail_subtotal", "component": "Row", "justify": "spaceBetween",
+         "children": ["subtotal_label", "subtotal_value"]},
+        {"id": "subtotal_label", "component": "Text", "text": "Subtotal"},
+        {"id": "subtotal_value", "component": "Text",
+         "text": {"call": "formatCurrency", "args": {"value": {"path": "/selected/subtotal"}, "currency": {"path": "/selected/currency"}}}},
+        {"id": "detail_vat", "component": "Row", "justify": "spaceBetween",
+         "children": ["vat_label", "vat_value"]},
+        {"id": "vat_label", "component": "Text",
+         "text": {"call": "formatString", "args": {"value": "VAT ${/selected/vat_rate_pct} %"}}},
+        {"id": "vat_value", "component": "Text",
+         "text": {"call": "formatCurrency", "args": {"value": {"path": "/selected/vat"}, "currency": {"path": "/selected/currency"}}}},
+        {"id": "detail_total", "component": "Row", "justify": "spaceBetween",
+         "children": ["total_label", "total_value"]},
+        {"id": "total_label", "component": "Text", "variant": "h4", "text": "Total"},
+        {"id": "total_value", "component": "Text", "variant": "h4",
+         "text": {"call": "formatCurrency", "args": {"value": {"path": "/selected/total"}, "currency": {"path": "/selected/currency"}}}}
+      ]
+    }
+  }
+]

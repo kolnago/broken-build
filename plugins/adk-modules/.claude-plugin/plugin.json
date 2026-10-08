@@ -1,0 +1,8 @@
+{
+  "name": "adk-modules",
+  "version": "0.1.0",
+  "description": "Draft. Google ADK software organised by domain: modules named in the business's language, each holding its bricks (models, ports, calculators, tools, agents, workflows, surfaces, callbacks, skills, MCP servers), composed into apps. Two skills: the charter (module contract, brick contract, strict and free trust, a recipe per kind, a check script) and the Python rules an AI agent follows in such a repository (uv, ruff, mypy strict, Pydantic v2, pytest), with the profile that fits them to the module shape. Ships the adk.dev docs MCP server; use with google-adk-reference for the ADK API.",
+  "author": {
+    "name": "kolnago"
+  }
+}

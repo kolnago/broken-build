@@ -1,0 +1,3 @@
+google-adk[db,mcp]>=2.11,<3
+asyncpg
+uvicorn

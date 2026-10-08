@@ -1,0 +1,8 @@
+{
+  "name": "adk-kit",
+  "version": "0.6.1",
+  "description": "Google ADK agent apps where numbers must be trustworthy: architecture rules (layers, figures with provenance, the turn ledger, number verification, the analyst-agent-in-a-shell pattern), A2UI surfaces rendered in React, and A2UI integration end to end (patterns, SSE or A2A transport, actions, security, restricted-environment deployment), plus ADK 2.x (google-adk 2.11) workflow, app-runtime and testing skills with tested examples and canary tests, for use alongside google-agents-cli. Pairs with the specfirst plugin, which carries the spec-first workflow. Skills follow the open Agent Skills format.",
+  "author": {
+    "name": "kolnago"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "python-kit",
+  "version": "0.2.0",
+  "description": "How I build Python applications with AI assistants: the shape and shared rules of a project architecture guide (layers with a framework-free core, exact money, explicit dates, calculators, ports with fakes, SQL in files, testing by layer), a template and enforcement config. The spec-first workflow that used to live here is now the separate specfirst plugin. Skills follow the open Agent Skills format.",
+  "author": {
+    "name": "kolnago"
+  }
+}

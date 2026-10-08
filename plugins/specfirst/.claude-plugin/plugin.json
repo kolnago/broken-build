@@ -1,0 +1,8 @@
+{
+  "name": "specfirst",
+  "version": "0.2.2",
+  "description": "Spec-first workflow for any project built with AI assistants, whatever the language or framework: intent → spec → plan → tasks → implement → review → verify → learn, with three human gates, hard stops, an optional autonomous run, optional tiered delegation, keyed naming, templates, a minimal architecture guide template and a check script (needs python3 to run, not a Python project). The skill follows the open Agent Skills format; two Claude Code subagents implement and review tasks.",
+  "author": {
+    "name": "kolnago"
+  }
+}
